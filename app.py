@@ -16,7 +16,6 @@ import os
 from datetime import datetime
 from slugify import slugify
 import psycopg2
-from flask_login import UserMixin
 
 
 app = Flask(__name__)
@@ -505,4 +504,8 @@ app.add_url_rule("/aboutme/","aboutme",aboutme)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+
+    app.run(debug=False)
+
+
+     
