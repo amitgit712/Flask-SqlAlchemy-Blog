@@ -1,0 +1,35 @@
+
+
+#login{
+
+	margin-top: 7%;
+	}
+
+ .img-round
+ {
+ 	border-radius: 50% !important;
+ }
+
+ .my-10
+ {
+ 	margin-top: 10% !important;
+ }
+
+ @media (max-width: 740px) {
+ 	.my-10
+ 	{
+ 		margin-top: 30% !important;
+ 	} 	
+}
+
+.concen{
+	margin-left: 17% !important;
+	margin-top: 5%;
+}
+
+ @media (max-width: 740px) {
+.concen{
+	margin-left: 0% !important;
+}
+}
+

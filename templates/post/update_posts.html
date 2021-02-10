@@ -1,0 +1,72 @@
+{% extends "backend_dashboard/index.html" %}
+        {% block body %}
+        <head>
+                <meta charset="utf-8">
+                <title>CKEditor</title>
+                <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+<style>
+body {
+  background-color: lightgray;
+}
+</style>
+
+        </head>
+<body>
+ <div class="container col-md-8">      
+{% for i in data %}
+<form action="{{ url_for('update_post',id=i.id) }}" method="POST" enctype="multipart/form-data">
+
+
+<div class="md-form form-group mt-5">
+
+
+<select name="category" class="form-control" id="cars" required>
+<option value="" selected>Select Category</option>
+{% for i in category %}
+<option value="{{ i.category }}" >{{ i.category }}</option>
+{% endfor %}
+</select>
+
+
+</div>
+
+
+
+<div class="md-form form-group mt-5">
+{% for message in get_flashed_messages() %}
+<code>{{ message }}</code>
+{% endfor %}
+<input type="text" class="form-control" name="blog_title" value="{{ i.blog_title }}">
+</div>
+
+<div class="md-form form-group mt-5">
+
+<textarea name="blog_meta_description" class="form-control" >{{ i.blog_meta_description }}</textarea>
+  </div>
+
+  <div class="md-form form-group mt-5">
+
+<textarea name="blog_meta_keywords" class="form-control">{{ i.blog_meta_keywords }}</textarea>
+  </div>
+
+  
+<div class="md-form form-group mt-5">
+
+<textarea name="editor1" >{{ i.textarea }}</textarea>
+</div> 
+<div class="md-form form-group mt-5 col-md-4">
+<input type="file" name="img"  class="btn btn-outline-dark btn-block " required>
+  </div>
+ <div class="md-form form-group mt-5 col-md-4">
+<input type="submit" value="Post Blog" class="btn btn-outline-dark btn-block ">
+  </div>
+</form>
+{% endfor %}
+
+</div>
+        <script>
+                        CKEDITOR.replace( 'editor1' );
+          </script>
+       </body>
+        {% endblock body %}

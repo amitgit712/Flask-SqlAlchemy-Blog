@@ -1,0 +1,151 @@
+{% extends 'home/index.html' %}
+{% block meta %}
+{% for i in about %}
+<meta name="description" content="{{ i.about_meta_description }}">
+<meta name="keywords" content="{{ i.about_meta_keywords }}">
+{% endfor %}
+{% endblock %}
+<header>
+
+{% block title %}
+    {% for i in about %}
+        <title>{{ i.about_title }}</title>
+    {% endfor %}
+{% endblock %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/all.css') }}">
+</header>
+
+{% block home %}
+ <li class="nav-item">
+  <a class="nav-link waves-effect" href="/">Home
+    <span class="sr-only">(current)</span>
+  </a>
+</li>
+{% endblock home %}
+
+{% block about %}
+<li class="nav-item active">
+<a class="nav-link waves-effect" href="{{ url_for('about_me') }}">About Me</a>
+</li>
+{% endblock about %}
+{% block body %}
+
+<body class="authorpage-v2">
+
+
+{% for i in about %}
+
+    <!--Main Layout-->
+    <main>
+
+        <div class="container-fluid mb-5 my-10">
+
+            <!--Grid row-->
+            <div class="row" style="margin-top: -75px;">
+
+                <!--Grid column-->
+                <div class="col-md-12 px-lg-5">
+                    <!--Card-->
+                    <div class="card pb-5 mx-md-3 col-md-8 concen">
+                        <div class="card-body">
+
+                            <div class="container">
+
+ 
+                              <div class="row d-flex justify-content-center mt-4 mb-2">  
+                                    <img src="{{ i.image }}" height="150" width="150" class="rounded-circle z-depth-5">
+                              </div>
+
+                                <!--Grid row-->
+                                <div class="row pt-lg-5 pt-3">
+
+
+                                    <!--Grid column-->
+                                    <div class="col-md-11 ml-xl-4 ">
+                                        
+                                            <!--Grid row-->
+                                        <div class="row d-flex justify-content-center mb-2">  
+                                            <div class="row">   
+                                            <h2 class="dark-grey-text article">{{ i.name }}</h2>
+                                            </div>
+                                        </div>
+
+                                        <div class="row d-flex justify-content-center mb-2">  
+                                            <div class="row">
+                                                <p class="dark-grey-text article">
+                                                {{ i.about_me | safe }}</p>
+
+                                            </div>
+                                        </div>
+											
+									<h5 class="row d-flex justify-content mb-3">Get In Touch</h5>
+{% if i.num %}
+
+										<div class="row d-flex justify-content">  
+                                        	<div class="row">
+                                            <p class="dark-grey-text article">
+                                                <i class="fas fa-phone-alt"></i>&nbsp;&nbsp;
+                                                        <a href="tel:{{ i.num }}" class="dark-grey-text">
+                                                            
+                                                            {{ i.num }}
+                                                        </a>
+                                                    </p>
+                                        	</div>
+                                        </div>
+{% else %}
+{% endif %}
+
+{% if i.email %}
+                                        	
+                                        <div class="row d-flex justify-content">  
+                                        	<div class="row">
+                                            <p class="dark-grey-text article">
+                                                <i class="fas fa-envelope"></i>&nbsp;&nbsp;
+                                                        <a href="mailto:{{ i.email }}" class="dark-grey-text">
+                                                            {{ i.email }}
+                                                        </a>
+                                                    </p>
+                                        	</div>
+                                    	</div>
+                                            <!--Grid row-->
+{% else %}
+{% endif %}
+
+
+
+                                   	</div>
+                                    <!--/Grid Column-->
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--/Card-->
+                    </div>
+                    <!--/Grid column-->
+
+                </div>
+                <!--/Grid row-->
+            </div>
+
+        </div>
+    </main>
+    <!--Main Layout-->
+
+{% endfor %}
+
+
+    <!-- SCRIPTS -->
+
+
+
+    <!-- Tooltips -->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+
+
+    <script src="{{ url_for('static',filename='js/js') }}"></script>
+
+
+
+{% endblock body %}

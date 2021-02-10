@@ -1,0 +1,58 @@
+{% extends "backend_dashboard/index.html" %}
+        {% block body %}
+
+<div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Blogs</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Posted Blogs</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">ID</th>
+                      <th class="text-center">Image</th>
+                      <th class="text-center">Title</th>
+                      <th class="text-center">Date</th>
+                      <th class="text-center">Soft delete</th>
+                      <th class="text-center">Delet</th>
+                      <th class="text-center">Edit</th>
+                
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in blog %}
+                    <tr>
+                      <td class="text-center">{{ i.id }}</td>
+                      <td class="text-center"><img src="{{ i.image }}" height="70" width="100"></td>
+                      <td class="text-center">{{ i.blog_title }}</td>
+                      <td class="text-center"></td>
+                      <td class="text-center"><a href="{{ url_for('remove_post',id=i.id) }}" class="btn btn-warning"  name="dlete">Soft
+                        Delete
+                      </a>
+                    </td>
+                   <td class="text-center"><a href="{{ url_for('delete_post',id=i.id) }}" class="btn btn-danger"  name="dlete">Delete
+                      </a>
+                    </td>
+                      <td class="text-center"><a href="{{ url_for('update_post',id=i.id) }}" class="btn btn-info"  name="edit">Edit
+                      </a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+        {% endblock body %}

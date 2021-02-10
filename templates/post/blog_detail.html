@@ -1,0 +1,133 @@
+{% extends 'home/index.html' %}
+{% block body %}
+
+{% block meta %}
+
+  {% for d in data  %}
+  <meta name="description" content="{{ d.blog_meta_description }}">
+    
+    {% endfor %}
+    
+    {% for k in data %}
+  <meta name="keywords" content="{{ k.blog_meta_keywords }}">
+    {% endfor %}
+{% endblock meta %}
+
+{% block title %}
+  
+  {% for t in data %}
+ <title>{{ t.blog_title }}</title>
+  {% endfor %}
+
+{% endblock title %}
+  <!--Main layout-->
+  <main class="mt-5 pt-5">
+    <div class="container">
+
+      <!--Section: Post-->
+      {% for i in data %}
+      <section class="mt-4">
+
+        <!--Grid row-->
+        <div class="row">
+
+          <!--Grid column-->
+          <div class="col-md-8 mb-4">
+
+            <!--Featured Image-->
+            <div class="card mb-4 wow fadeIn">
+
+              <img src="{{ i.image }}" class="img-fluid" alt="">
+
+            </div>
+            <!--/.Featured Image-->
+
+            <!--Card-->
+            <div class="card mb-4 wow fadeIn">
+
+              <!--Card content-->
+              <div class="card-body text-center">
+
+                <h5 class="my-4">
+                  <strong>{{ i.blog_title }}</strong>
+                </h5>
+              </div>
+
+            </div>
+            <!--/.Card-->
+
+            <!--Card-->
+            <div class="card mb-4 wow fadeIn">
+
+              <!--Card content-->
+              <div class="card-body">
+
+                <p class=" my-4"><strong>{{ i.sub_title }}</strong></p>
+
+                {{  i.textarea | safe }}
+
+              </div>
+
+            </div>
+            <!--/.Card-->
+
+           
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-4 mb-4">
+
+           
+
+
+            <!--Card-->
+            <div class="card mb-4 wow fadeIn">
+
+              <div class="card-header">Related articles</div>
+
+              <!--Card content-->
+              <div class="card-body">
+
+                <ul class="list-unstyled">
+
+                  {% for i in related_post %}
+                  <li class="media my-4">
+                    <img class="d-flex mr-3" src="{{ i.image }}" alt="Generic placeholder image" height="70" width="70">
+                    <div class="media-body">
+                      <a href="{{ url_for('post_detail',slug=i.slug) }}">
+                        <h5 class="mt-0 mb-1 font-weight-bold">{{ i.blog_title }}</h5>
+                      </a>
+                      <p>
+                      <i class="far fa-calendar-alt"></i>&nbsp;
+                      {{ i.posted_at.strftime('%d-%h-%Y') }}
+                      <br>
+                      <i class="far fa-clock"></i>&nbsp;
+                      {{ i.posted_at.strftime('%H:%M:%S') }}
+                      </p>
+                    </div>
+                  </li>
+                  <hr>
+                  {% endfor %}
+
+
+                </ul>
+
+              </div>
+
+            </div>
+            <!--/.Card-->
+
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+
+      </section>
+      <!--Section: Post-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+{% endfor %}
+{% endblock body %}

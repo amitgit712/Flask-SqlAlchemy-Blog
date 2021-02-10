@@ -1,0 +1,58 @@
+{% extends "backend_dashboard/index.html" %}
+        {% block body %}
+
+<div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Blogs</h1>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Posted Blogs</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th class="text-center">ID</th>
+                      <th class="text-center">Name</th>
+                      <th class="text-center">Email</th>
+                      <th class="text-center">Subject</th>
+                      <th class="text-center">Restore</th>
+                      <th class="text-center">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in contacts %}
+                    <tr>
+                      <td class="text-center">{{ i.id }}</td>
+                      <td class="text-center">{{ i.Name }}</td>
+                      <td class="text-center">{{ i.Email }}</td>
+                      <td class="text-center">{{ i.Subject }}</td>
+                      <td class="text-center">
+                        <a href="{{ url_for('restore_contact',id=i.id) }}" class="btn btn-outline-warning"  name="restore">
+                          Restore
+                      </a>
+                    </td>
+                   <td class="text-center">
+                    <a href="{{ url_for('delete_contact',id=i.id) }}" class="btn btn-outline-danger"  name="delete">
+                      Delete
+                      </a>
+                    </td>
+
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+        {% endblock body %}

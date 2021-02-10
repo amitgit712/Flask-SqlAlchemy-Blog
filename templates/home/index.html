@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  {% block meta %}
+  {% for d in index %}
+  <meta name="description" content="{{ d.index_meta_description }}">
+  {% endfor %}
+  {% for k in index %}
+  <meta name="keywords" content="{{ k.index_meta_keywords }}">
+  {% endfor %}
+  {% endblock meta %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+ 
+  {% block title %}
+  {% for t in index %}
+  <title>{{ t.index_title }}</title>
+  {% endfor %}
+  {% endblock title %}
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{{ url_for('static',filename='css/mdb.min.css') }}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{{ url_for('static',filename='css/style.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!--Main Navigation-->
+  <header>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+      <div class="container">
+
+        <!-- Brand -->
+        <a class="navbar-brand waves-effect" href="">
+          {% for i in pro %}
+          <img src="{{ i.image }}" class="img-round"  height="50" width="50">
+            {% endfor %} 
+        </a>
+
+        <!-- Collapse -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <!-- Left -->
+          <ul class="navbar-nav mr-auto">
+            {% block home %}
+            <li class="nav-item active">
+              <a class="nav-link waves-effect" href="/">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            {% endblock %}
+
+{% if pro %}
+            {% block about %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="/aboutme/">About Me</a>
+            </li>
+            {% endblock %}
+{% else %}
+{% endif %}
+
+            {% block contact %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="/contact/">Contact</a>
+            </li>
+            {% endblock %}
+          </ul>
+
+
+        </div>
+
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+  </header>
+  <!--Main Navigation-->
+{% block body %}
+  <!--Main layout-->
+  <main class="mt-5 pt-5">
+    <div class="container">
+
+
+
+      <hr class="my-5">
+      <!--Section: Cards-->
+      <section class="text-center">
+<!--card-->
+        <!--Grid row-->
+<div class="row mb-5 col-md-12 wow fadeIn">
+
+    {% for i in category.items %}
+    
+
+            <!--Card-->
+            <div class="card col-md-4 my-3">
+
+              <!--Card image-->
+              <div class="view overlay">
+                <div class="embed-responsive embed-responsive-16by9 rounded-top">
+                  <!-- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cXTThxoywNQ" allowfullscreen></iframe> -->
+                <img class="embed-responsive-item" src="{{ i.image }}">
+                </div>
+              </div>
+
+              <!--Card content-->
+              <div class="card-body">
+                <!--Title-->
+                <h4 class="card-title">{{ i.category_title }}</h4>
+                <!--Text-->
+                <p class="card-text">{{ i.category_subtitle }}</p>
+                <p class="card-text">
+                </p>
+                <a href="{{ url_for('post_detail',slug=i.slug) }}">
+                <input type="submit" class="btn btn-outline-dark" name="Read More"
+                value="View More">
+                </a>
+              </div>
+
+            </div>
+            <!--/.Card-->        
+        {% endfor %}
+  </div>
+
+        <!--Grid row-->
+        <!--Pagination-->
+        <nav class="d-flex justify-content-center wow fadeIn">
+          <ul class="pagination pg-blue">
+
+            <!--Arrow left-->
+          
+ {% for page_num in category.iter_pages() %}
+
+        {% if page_num %}
+            <li class="page-item active">
+              
+              <a class="page-link mx-1" href="{{ url_for('index',page=page_num ) }}">
+              {{ page_num }} 
+                <span class="sr-only"></span>
+              </a>
+            </li>
+             
+              {% else %}
+          ... 
+        {% endif %}
+      {% endfor %}
+            
+          </ul>
+        </nav>
+        <!--Pagination-->
+
+      </section>
+      <!--Section: Cards-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+{% endblock body %}
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mdb-color darken-2 mt-4 wow fadeIn">
+
+   
+    <!--/.Call to action-->
+
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+                  <a href="">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="">
+        <i class="fab fa-instagram mr-3"></i>
+      </a>
+
+      <br>
+      <br>
+
+       © Copyright&nbsp;<script type="text/javascript">document.write(new Date().getFullYear())</script>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/mdb.min.js') }}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+</body>
+
+</html>

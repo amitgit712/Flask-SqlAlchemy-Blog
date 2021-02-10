@@ -1,0 +1,85 @@
+{% extends 'backend_dashboard/index.html' %}
+{% block body %}
+
+{% for i in contact %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='dashboard/css/contact-detail.css') }}">
+<hr>
+<div class="container bootstrap snippet">
+   
+    <div class="row">
+  		<div class="col-sm-3"><!--left col-->
+              
+
+      <div class="text-center">
+        <img src="{{ url_for('static', filename='img/user.webp') }}" class="shadow-lg img-circle mb-5" alt="avatar"><hr>
+
+					<div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>ID</h4></label>
+                              <h6>{{ i.id }}</h6>
+                          </div>
+                    </div>
+<hr>
+                    <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>AT</h4></label>
+                              <h6>{{ i.contact_at }}</h6>
+                          </div>
+                    </div>
+
+      </div></hr><br>
+        </div>
+    	<div class="col-sm-9">  
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <hr>
+                  <form class="form" action="##" method="post" id="registrationForm">
+                      
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Name</h4></label>
+                              <li class="form-control">{{ i.Name }}</li>
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Email</h4></label>
+                              <li class="form-control">{{ i.Email }}</li>
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Subject</h4></label>
+                              <li class="form-control">{{ i.Subject }}</li>
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Message</h4></label>
+                              <textarea cols="10" rows="10" class="form-control" disabled>{{ i.Message }}
+                              </textarea>
+                          </div>
+                      </div>
+                  
+
+              	</form>
+              
+              <hr>
+              
+             </div><!--/tab-pane-->
+            
+               
+              </div><!--/tab-pane-->
+          </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+
+
+
+{% endfor %}
+{% endblock body %}

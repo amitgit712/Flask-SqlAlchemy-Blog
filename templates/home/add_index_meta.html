@@ -1,0 +1,64 @@
+
+{% extends "backend_dashboard/index.html" %}
+        {% block body %}
+
+<div class="container col-md-8">      
+
+{% if meta %}
+<h1>Update Home Page</h1>
+{% for i in meta %}
+<form action="{{ url_for('update_imeta',id=i.id) }}" method="POST" enctype="multipart/form-data">
+
+
+<div class="md-form form-group mt-5">
+<label for="Meta Description">Add Meta Description</label>
+<input type="text" class="form-control" name="index_meta_description" value="{{ i.index_meta_description }}">
+</div>
+
+<div class="md-form form-group mt-5">
+<label for="Meta Keywords">Add Meta Keywords</label>
+<input type="text" class="form-control" name="index_meta_keywords" value="{{ i.index_meta_keywords }}">
+</div>
+
+<div class="md-form form-group mt-5">
+<label for="Title">Add Title</label>
+<input type="text" class="form-control" name="index_title" value="{{ i.index_title }}">
+</div>
+
+<div class="md-form form-group mt-5">
+<input type="submit"  value="Update" class="btn btn-outline-primary">
+</div>
+
+</form>
+{% endfor %}
+
+{% else %}
+
+<h1>Add Home Page</h1>
+<form action="{{ url_for('mindex') }}" method="POST" enctype="multipart/form-data">
+
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="index_meta_description" placeholder="index_meta_description">
+</div>
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="index_meta_keywords" placeholder="index_meta_keywords">
+</div>
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="index_title" placeholder="index_title">
+</div>
+
+<div class="md-form form-group mt-5">
+<input type="submit"  value="ADD" class="btn btn-outline-primary">
+</div>
+
+
+</form>
+{% endif %}
+
+
+</div>
+
+ {% endblock body %}

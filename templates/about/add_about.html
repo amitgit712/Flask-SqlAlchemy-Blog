@@ -1,0 +1,139 @@
+{% extends "backend_dashboard/index.html" %}
+        {% block body %}
+
+
+<head>
+                <meta charset="utf-8">
+                <title>CKEditor</title>
+                <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+<style>
+body {
+  background-color: lightgray;
+}
+</style>
+</head>
+
+<div class="container col-md-8">      
+
+<!-- Upadte Form -->
+{% if a %}
+{% for i in a %}
+<form action="{{ url_for('update_about_me',id=i.id) }}" method="POST" enctype="multipart/form-data">
+ 
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" disabled="true" id="formGroupExampleInputMD" placeholder="Upload Profile Image">
+</div>
+
+<div class="md-form form-group mt-5 col-md-4">
+<input type="file" name="profile" class="btn btn-outline-dark btn-block" required>
+</div>
+
+
+<div class="md-form form-group mt-5">
+<label>Title</label>
+<input type="text" class="form-control" name="about_title" value="{{ i.about_title }}">
+
+</div>
+ 
+<div class="md-form form-group mt-5">
+    <label>Description</label>
+<input type="text" class="form-control" name="about_meta_description" value="{{ i.about_meta_description }}">
+
+</div>
+ 
+ <div class="md-form form-group mt-5">
+    <label>Keywords</label>
+<input type="text" class="form-control" name="about_meta_keywords" value="{{ i.about_meta_keywords }}" >
+
+</div>
+    <label>Name</label>
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="name" value="{{ i.name }}">
+
+</div>
+<div class="md-form form-group mt-5"> 
+        <label>Email</label>
+    <input type="email" class="form-control" name="email" id="formGroupExampleInputMD" value="{{ i.email }}">
+</div>
+<div class="md-form form-group mt-5"> 
+        <label>Number</label>
+    <input type="number" class="form-control" name="num" id="formGroupExampleInputMD" value="{{ i.num }}">
+</div>
+
+ <div class="md-form form-group mt-5">
+<h3>About me</h3>
+<textarea name="editor1" >{{ i.about_me }}</textarea>
+</div> 
+ 
+ <div class="md-form form-group mt-5 col-md-4">
+<input type="submit" name="" value="Upload Updates" class="btn btn-outline-dark btn-block ">
+  </div>
+</form>
+{% endfor %}
+
+{% else %}
+<form action="{{ url_for('add_about') }}" method="POST" enctype="multipart/form-data">
+ 
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" placeholder="About Me" disabled required>
+
+</div>
+ 
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" disabled="true" id="formGroupExampleInputMD" placeholder="Upload Profile Image">
+</div>
+
+<div class="md-form form-group mt-5 col-md-4">
+<input type="file" name="profile" class="btn btn-outline-dark btn-block " required>
+</div>
+
+
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="about_title" placeholder="About title">
+
+</div>
+ 
+<div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="about_meta_description" placeholder="About meta description">
+
+</div>
+ 
+ <div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="about_meta_keywords" placeholder="About meta keywords" >
+
+</div>
+ 
+
+
+ <div class="md-form form-group mt-5">
+<input type="text" class="form-control" name="name" placeholder="Name" required>
+
+</div>
+ 
+<div class="md-form form-group mt-5"> 
+    <input type="email" class="form-control" name="email" id="formGroupExampleInputMD" placeholder="Email" required>
+</div>
+
+<div class="md-form form-group mt-5"> 
+    <input type="number" class="form-control" name="num" id="formGroupExampleInputMD" placeholder="Number" required>
+</div>
+
+
+ <div class="md-form form-group mt-5">
+<h3>About me</h3>
+<textarea name="editor1" ></textarea>
+</div> 
+ 
+ <div class="md-form form-group mt-5 col-md-4">
+<input type="submit" name="" value="Upload" class="btn btn-outline-dark btn-block ">
+  </div>
+</form>
+{% endif %}
+</div>
+                <script>
+                        CKEDITOR.replace( 'editor1' );
+                </script>
+        {% endblock body %}
