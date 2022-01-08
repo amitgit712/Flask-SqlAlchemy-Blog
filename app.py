@@ -19,24 +19,18 @@ import psycopg2
 
 
 app = Flask(__name__)
-
 db = SQLAlchemy()
-
 
 #########Configration##############
 basedir = os.path.dirname((os.path.abspath(__file__)))
-
 app.config['SECRET_KEY'] = "hdkfhskjfhsdkjfhsdkfhsdkhf763487236"
-
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://blog:amit@1234@localhost:5432/blog_db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "db_uri"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
- 
 bootstrap = Bootstrap(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -50,6 +44,7 @@ app.config['PROFILE_FOLDER'] = basedir+"/static/uploads/profile"
 ##########################models######################################
 class Sign_up(UserMixin, db.Model):
     __tablename__='sign_up'
+  
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), nullable=True)
     email = db.Column(db.String(255),nullable=True)
@@ -58,9 +53,9 @@ class Sign_up(UserMixin, db.Model):
     status = db.Column(db.Boolean, default=False, nullable=False)
 
 
-
 class About(db.Model):
     __tablename__='about'
+  
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.Text(),nullable=True)
     about_meta_description = db.Column(db.Text(),nullable=True)
@@ -73,8 +68,10 @@ class About(db.Model):
     uploded_at = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.Boolean, default=False, nullable=False)
 
+    
 class Category(db.Model):
     __tablename__ = 'category'
+  
     id = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String(255),nullable=True)
     status = db.Column(db.Boolean, default=False, nullable=False)
@@ -82,6 +79,7 @@ class Category(db.Model):
 
 class Index(db.Model):
     __tablename__ = 'index'
+  
     id = db.Column(db.Integer, primary_key=True)
     index_meta_description = db.Column(db.Text(),nullable=True)
     index_meta_keywords = db.Column(db.Text(),nullable=True)
@@ -91,7 +89,7 @@ class Index(db.Model):
 
 class Contact(db.Model):
     __tablename__='contact'
-
+  
     id = db.Column(db.Integer,primary_key=True)
     Name = db.Column(db.Text(),nullable=True)
     Email= db.Column(db.Text(),nullable=True)
@@ -121,15 +119,10 @@ class Posts(db.Model):
         if value and (not target.slug or value != oldvalue):
             target.slug = slugify(value)
 
-
-
 db.event.listen(Posts.blog_title, 'set', Posts.generate_slug, retval=False)
 
 
 ########################End models#########################################
-
-
-
 @app.route('/')
 @app.route('/home/')
 def index():
@@ -139,6 +132,7 @@ def index():
     index = Index.query.all()
     return render_template('home/index.html',category=category,pro=pro,index=index)
 ####################
+
 @app.route('/blog-detail/<slug>/')
 def post_detail(slug):
     blog = Posts.query.filter_by(status='False',slug=slug)
@@ -159,11 +153,11 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('remember me')
 
+    
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-
 
 
 @app.route('/admin-login/', methods=['GET', 'POST'])
@@ -198,7 +192,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
 @app.route('/adminurl-login/')
 @login_required
 def backend_dashboard():
@@ -209,7 +202,6 @@ def backend_dashboard():
 def view_blogs():
     blog = Posts.query.filter_by(status=False)
     return render_template('post/viewblog.html', blog=blog)
-
 
 @app.route('/add-about-me/', methods=['GET','POST'])
 @login_required
@@ -226,7 +218,12 @@ def add_about():
         filename = secure_filename(image.filename)
         path = '/static/uploads/profile/'+filename
         image.save(os.path.join(app.config['PROFILE_FOLDER'],filename))            
-        entry = About(about_meta_description=about_meta_description,about_meta_keywords=about_meta_keywords,about_title=about_title,name=name,about_me=about_me,num=num,email=email,image=path)
+        entry = About(
+                 about_meta_description=about_meta_description,
+                 about_meta_keywords=about_meta_keywords,
+                 about_title=about_title,name=name,about_me=about_me,
+                 num=num,email=email,image=path
+                 )
         db.session.add(entry)
         db.session.commit()
         db.session.close()
@@ -250,7 +247,11 @@ def update_about_me(id):
         filename = secure_filename(image.filename)
         path = '/static/uploads/profile/'+filename
         image.save(os.path.join(app.config['PROFILE_FOLDER'],filename))
-        ch = About.query.filter_by(id=id).update(dict(about_meta_description=about_meta_description,about_meta_keywords=about_meta_keywords,about_title=about_title,name=name,about_me=about_me,num=num,email=email,image=path))
+        ch = About.query.filter_by(id=id).update(dict(
+                 about_meta_description=about_meta_description,
+                 about_meta_keywords=about_meta_keywords,about_title=about_title,
+                 name=name,about_me=about_me,num=num,email=email,image=path
+                 ))
         db.session.commit()
         return redirect('/add-about-me/')
     
@@ -269,7 +270,11 @@ def add_post():
             filename = secure_filename(image.filename)
             path = '/static/uploads/blog/'+filename
             image.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-            entry = Posts(category=category,blog_meta_description=blog_meta_description, blog_meta_keywords=blog_meta_keywords, blog_title = blog_title, textarea = editor1, image=path )
+            entry = Posts(
+                     category=category,blog_meta_description=blog_meta_description,
+                     blog_meta_keywords=blog_meta_keywords, blog_title = blog_title,
+                     textarea = editor1, image=path
+                     )
             db.session.add(entry)
             db.session.commit()
             db.session.close()
